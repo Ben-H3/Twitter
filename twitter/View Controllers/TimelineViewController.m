@@ -8,8 +8,9 @@
 
 #import "TimelineViewController.h"
 #import "APIManager.h"
+#import "TweetCell.h"
 
-@interface TimelineViewController ()
+@interface TimelineViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @end
 
@@ -18,23 +19,60 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Get timeline
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    
+    // Set up refresh
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(beginRefresh:) forControlEvents:UIControlEventValueChanged];
+    [self.tableView insertSubview:refreshControl atIndex:0];
+    
+    // Set up tweet array
+    self.tweets = [[NSMutableArray alloc] init];
     [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
         if (tweets) {
             NSLog(@"😎😎😎 Successfully loaded home timeline");
-            for (NSDictionary *dictionary in tweets) {
-                NSString *text = dictionary[@"text"];
-                NSLog(@"%@", text);
-            }
+            self.tweets = tweets;
+            [self.tableView reloadData];
+            
         } else {
             NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
         }
     }];
 }
 
+-(void) beginRefresh: (UIRefreshControl *) refreshControl {
+    // Reload tweets when refresh
+    [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
+        if (tweets) {
+            NSLog(@"😎😎😎 Successfully loaded home timeline");
+            self.tweets = tweets;
+            [self.tableView reloadData];
+            
+            [refreshControl endRefreshing];
+            
+        } else {
+            NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
+        }
+    }];
+    
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.tweets.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell" forIndexPath:indexPath];
+    Tweet *tweet = self.tweets[indexPath.row];
+    cell.tweet = tweet;
+    [cell loadTweet];
+    return cell;
 }
 
 /*
@@ -46,6 +84,5 @@
     // Pass the selected object to the new view controller.
 }
 */
-
 
 @end
