@@ -7,6 +7,7 @@
 //
 
 #import "Tweet.h"
+#import "DateTools.h"
 
 @implementation Tweet
 
@@ -45,7 +46,16 @@
         formatter.dateStyle = NSDateFormatterShortStyle;
         formatter.timeStyle = NSDateFormatterNoStyle;
         // Convert Date to String
-        self.createdAtString = [formatter stringFromDate:date];
+        // Convert Date to String
+        if ([date daysAgo] > 7){
+            self.createdAtString = [formatter stringFromDate:date];
+        } else if ([date hoursAgo] > 24) {
+            self.createdAtString = [NSString stringWithFormat:@"%.ldd",[date daysAgo]];
+        } else if ([date minutesAgo] > 60) {
+            self.createdAtString = [NSString stringWithFormat:@"%.fh",[date hoursAgo]];
+        } else {
+            self.createdAtString = [NSString stringWithFormat:@"%.fm",[date minutesAgo]];
+        }
     }
     return self;
 }
