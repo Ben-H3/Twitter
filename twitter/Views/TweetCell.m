@@ -9,7 +9,7 @@
 #import "TweetCell.h"
 #import "APIManager.h"
 #import "UIImageView+AFNetworking.h"
-
+#import "Tweet.h"
 
 @implementation TweetCell
 
@@ -54,6 +54,62 @@
         [self.retweetButton setImage:image forState:UIControlStateNormal];
     }
     
+}
+
+- (IBAction)didTapFavorite:(id)sender {
+    // Update the local tweet model
+    [self.tweet updateFavorite];
+    // Update cell UI
+    [self loadTweet];
+    // Send a POST request to the POST favorites/create endpoint
+    if (self.tweet.favorited) {
+        [[APIManager shared] favorite:self.tweet completion:^(Tweet *tweet, NSError *error) {
+            if(error){
+                 NSLog(@"Error favoriting tweet: %@", error.localizedDescription);
+            }
+            else{
+                NSLog(@"Successfully favorited the following Tweet: %@", tweet.text);
+            }
+        }];
+    }
+    else {
+        [[APIManager shared] unfavorite:self.tweet completion:^(Tweet * tweet, NSError * error) {
+            if(error){
+                NSLog(@"Error unfavoriting tweet: %@", error.localizedDescription);
+            }
+            else {
+                NSLog(@"Successfully unfavorited the following Tweet: %@", tweet.text);
+            }
+        }];
+    }
+}
+
+- (IBAction)didTapRetweet:(id)sender {
+    // Update the local tweet model
+    [self.tweet updateRetweet];
+    // Update cell UI
+    [self loadTweet];
+    // Send a POST request to the POST favorites/create endpoint
+    if (self.tweet.retweeted){
+        [[APIManager shared] retweet:self.tweet completion:^(Tweet * tweet, NSError * error) {
+            if(error){
+                NSLog(@"Error retweeting tweet: %@", error.localizedDescription);
+            }
+            else {
+                NSLog(@"Successfully retweeted the following Tweet: %@", tweet.text);
+            }
+        }];
+    }
+    else {
+        [[APIManager shared] unretweet:self.tweet completion:^(Tweet * tweet, NSError * error) {
+            if(error){
+                NSLog(@"Error unretweeting tweet: %@", error.localizedDescription);
+            }
+            else {
+                NSLog(@"Successfully unretweeting the following Tweet: %@", tweet.text);
+            }
+        }];
+    }
 }
 
 @end

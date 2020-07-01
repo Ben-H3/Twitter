@@ -11,6 +11,7 @@ target 'twitter' do
   pod 'DateTools'
   pod 'TTTAttributedLabel'
   pod 'SVPullToRefresh'
+  pod 'STTweetLabel'
 end
 
 post_install do |installer|

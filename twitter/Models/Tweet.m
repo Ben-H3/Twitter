@@ -59,4 +59,26 @@
     return tweets;
 }
 
+- (void)updateFavorite{
+    if (self.favorited){
+        self.favorited = NO;
+        self.favoriteCount -= 1;
+    }
+    else {
+        self.favorited = YES;
+        self.favoriteCount += 1;
+    }
+}
+
+- (void)updateRetweet{
+    if (self.retweeted){
+        self.retweeted = NO;
+        self.retweetCount -= 1;
+    }
+    else {
+        self.retweeted = YES;
+        self.retweetCount += 1;
+    }
+}
+
 @end
