@@ -18,4 +18,6 @@
 
 - (void)composeTweetWith:(NSString *)text completion:(void (^)(Tweet *, NSError *))completion;
 
+- (void)postStatusWithText:(NSString *)text completion:(void (^)(Tweet *, NSError *))completion;
+
 @end
