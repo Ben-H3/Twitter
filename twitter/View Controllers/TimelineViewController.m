@@ -8,6 +8,7 @@
 
 #import "TimelineViewController.h"
 #import "ComposeViewController.h"
+#import "DetailsViewController.h"
 #import "APIManager.h"
 #import "TweetCell.h"
 #import "AppDelegate.h"
@@ -97,9 +98,17 @@
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    UINavigationController *navigationController = [segue destinationViewController];
-    ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
-    composeController.delegate = self;
+    if ([segue.destinationViewController isKindOfClass:[DetailsViewController class]]) {
+        UITableViewCell *tappedCell = sender;
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
+        DetailsViewController *detailsViewController = [segue destinationViewController];
+        detailsViewController.tweet = self.tweets[indexPath.row];
+    }
+    else {
+        UINavigationController *navController = [segue destinationViewController];
+        ComposeViewController *composeViewController = (ComposeViewController*)navController.topViewController;
+        composeViewController.delegate = self;
+    }
 }
 
 @end
