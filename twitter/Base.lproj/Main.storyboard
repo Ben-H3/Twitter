@@ -237,6 +237,11 @@
                         <barButtonItem title="Item" id="bxj-79-ygr"/>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Home Timeline" id="MOc-fV-EZE">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="U0H-ZQ-o4E">
+                            <connections>
+                                <action selector="logout:" destination="Lbl-k5-U4i" id="EZS-u6-eeg"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Item" image="edit-icon" id="feb-L8-NBB">
                             <connections>
                                 <segue destination="WNM-T4-dvd" kind="presentation" id="zE7-c6-xzQ"/>
