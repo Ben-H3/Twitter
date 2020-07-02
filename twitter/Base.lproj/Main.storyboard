@@ -188,7 +188,7 @@
                                             <outlet property="profileImage" destination="sQN-mp-yk6" id="HxC-Ra-JzJ"/>
                                             <outlet property="replyButton" destination="glB-Qq-ds3" id="n6e-WB-WCc"/>
                                             <outlet property="retweetButton" destination="Do7-vg-CLR" id="YdN-G0-KoH"/>
-                                            <segue destination="hlA-tE-mfu" kind="presentation" id="YeA-Tj-UGe"/>
+                                            <segue destination="hlA-tE-mfu" kind="show" id="UHj-ha-SOQ"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -323,7 +323,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="biK-I2-hY9">
-                                <rect key="frame" x="25" y="25" width="80" height="80"/>
+                                <rect key="frame" x="25" y="81" width="80" height="80"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="80" id="CKW-fU-j78"/>
@@ -331,19 +331,19 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cxr-lI-1Yh">
-                                <rect key="frame" x="159" y="27" width="65.5" height="29"/>
+                                <rect key="frame" x="159" y="83" width="65.5" height="29"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Screenname" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5z3-Jf-4ch">
-                                <rect key="frame" x="159" y="61" width="96" height="21"/>
+                                <rect key="frame" x="159" y="117" width="96" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NKn-nm-RTt">
-                                <rect key="frame" x="8" y="224" width="103" height="30"/>
+                                <rect key="frame" x="8" y="280" width="103" height="30"/>
                                 <state key="normal" title="Favorites" image="favor-icon">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -352,7 +352,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g8n-gm-ugo">
-                                <rect key="frame" x="8" y="186" width="96" height="30"/>
+                                <rect key="frame" x="8" y="242" width="96" height="30"/>
                                 <state key="normal" title="Retweet" image="retweet-icon">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -361,22 +361,22 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Posted time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qgA-8x-mVG">
-                                <rect key="frame" x="11" y="123" width="76" height="17"/>
+                                <rect key="frame" x="11" y="179" width="76" height="17"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KFH-bW-Jkp">
-                                <rect key="frame" x="8" y="148" width="75" height="30"/>
+                                <rect key="frame" x="8" y="204" width="75" height="30"/>
                                 <state key="normal" title="Reply" image="reply-icon">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <segue destination="WNM-T4-dvd" kind="presentation" identifier="replyFromDetail" id="R0B-ht-ATb"/>
+                                    <segue destination="WNM-T4-dvd" kind="presentation" id="R0B-ht-ATb"/>
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Text" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Ihx-uH-eE9">
-                                <rect key="frame" x="159" y="90" width="245" height="164"/>
+                                <rect key="frame" x="159" y="146" width="245" height="164"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="164" id="GcK-v2-NJq"/>
@@ -464,28 +464,9 @@
             </objects>
             <point key="canvasLocation" x="1522" y="767"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="5Gc-kZ-0JC">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Mfk-ak-HOu" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Wfb-8v-ydi">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="hlA-tE-mfu" kind="relationship" relationship="rootViewController" id="FLS-4K-iHp"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="WVh-Rf-6cI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2236" y="767"/>
-        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="R0B-ht-ATb"/>
-        <segue reference="YeA-Tj-UGe"/>
+        <segue reference="pSw-a4-x42"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="TwitterLogoBlue" width="200" height="200"/>

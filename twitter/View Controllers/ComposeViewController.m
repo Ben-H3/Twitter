@@ -87,7 +87,7 @@
 }
 
 -(void)updateCount {
-    int currLength = (140 - ((int) [self.NewTweet.text length]));
+    int currLength = (280 - ((int) [self.NewTweet.text length]));
     self.charCount.text = [NSString stringWithFormat:@"%@%d", @"Remaining Characters: ", currLength];
 }
 
