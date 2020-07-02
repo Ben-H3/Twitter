@@ -13,23 +13,42 @@
 #import "TweetCell.h"
 #import "AppDelegate.h"
 #import "LoginViewController.h"
+#import "InfiniteScrollActivityView.h"
 
-@interface TimelineViewController () <ComposeViewControllerDelegate, TweetDetailViewControllerDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface TimelineViewController () <ComposeViewControllerDelegate, TweetDetailViewControllerDelegate, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
+
+@property (assign, nonatomic) BOOL isMoreDataLoading;
+@property (strong, nonatomic) InfiniteScrollActivityView *activityIndicator;
 
 @end
 
 @implementation TimelineViewController
+
+bool isMoreDataLoading = NO;
+InfiniteScrollActivityView* loadingMoreView;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    
     // Set up refresh
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(beginRefresh:) forControlEvents:UIControlEventValueChanged];
     [self.tableView insertSubview:refreshControl atIndex:0];
+    
+    // Set up Infinite Scroll loading indicator
+    CGRect frame = CGRectMake(0,
+                                self.tableView.contentSize.height,
+                                self.tableView.bounds.size.width,
+                                [InfiniteScrollActivityView defaultHeight]);
+    self.activityIndicator = [[InfiniteScrollActivityView alloc] initWithFrame:frame];
+    self.activityIndicator.hidden = YES;
+    [self.tableView addSubview:self.activityIndicator];
+    
+    UIEdgeInsets insets = self.tableView.contentInset;
+    insets.bottom += InfiniteScrollActivityView.defaultHeight;
+    self.tableView.contentInset = insets;
     
     // Set up tweet array
     self.tweets = [[NSMutableArray alloc] init];
@@ -88,6 +107,40 @@
     cell.tweet = tweet;
     [cell loadTweet];
     return cell;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (!self.isMoreDataLoading) {
+        int totalContentHeight = self.tableView.contentSize.height;
+        int oneScreenHeight = self.tableView.bounds.size.height;
+        int scrollViewOffsetThreshold = totalContentHeight - oneScreenHeight;
+        if (scrollView.contentOffset.y > scrollViewOffsetThreshold && self.tableView.isDragging) {
+            
+            // update position of loading wheel and animate
+            CGRect frame = CGRectMake(0,
+                                      self.tableView.contentSize.height,
+                                      self.tableView.bounds.size.width,
+                                      [InfiniteScrollActivityView defaultHeight]);
+            self.activityIndicator.frame = frame;
+            [self.activityIndicator startAnimating];
+            
+            self.isMoreDataLoading = YES;
+            Tweet *lastTweet = self.tweets[self.tweets.count - 1];
+            NSString *lastTweetID = lastTweet.idStr;
+            [[APIManager shared] getHomeTimelineTweetsOlderThan:lastTweetID
+                                                 withCompletion:^(NSArray *newTweets, NSError *error) {
+                if (error) {
+                    NSLog(@"Error getting older home timeline: %@", error.localizedDescription);
+                }
+                else {
+                    self.tweets = [self.tweets arrayByAddingObjectsFromArray:newTweets];
+                    [self.activityIndicator stopAnimating];
+                    self.isMoreDataLoading = NO;
+                    [self.tableView reloadData];
+                }
+            }];
+        }
+    }
 }
 
 -(void)didTweet:(Tweet *)tweet{

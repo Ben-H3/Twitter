@@ -62,6 +62,30 @@ static NSString * const consumerSecret = @"s5ynGqXzstUZwFPxVyMDkYh197qvHOcVM3kwv
 
 }
 
+- (void)getHomeTimelineTweetsOlderThan:(NSString *)tweetID
+                        withCompletion:(void(^)(NSArray *tweets, NSError *error))completion {
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary new];
+    [parameters setObject:@20 forKey:@"count"];
+    
+    // if tweetID is nil, fetch most recent tweets
+    // if tweetID is not nil, fetch tweets older than that tweet
+    if (tweetID)
+        [parameters setObject:tweetID forKey:@"max_id"];
+    
+    [self GET:@"1.1/statuses/home_timeline.json"
+   parameters:parameters
+     progress:nil
+      success:^(NSURLSessionDataTask * _Nonnull task, NSArray *  _Nullable tweetDictionaries) {
+          NSArray *tweets = [Tweet tweetsWithArray:tweetDictionaries];
+          completion(tweets, nil);
+          
+      } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+          completion(nil, error);
+      }];
+}
+
+
 - (void)composeTweetWith:(NSString *)text completion:(void (^)(Tweet *, NSError *))completion{
     
     NSString *urlString = @"1.1/statuses/update.json";

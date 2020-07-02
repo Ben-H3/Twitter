@@ -1,0 +1,21 @@
+//
+//  InfiniteScrollActivityView.h
+//  twitter
+//
+//  Created by Benjamin Charles Hora on 7/2/20.
+//  Copyright © 2020 Emerson Malca. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface InfiniteScrollActivityView : UIView
+
+- (void)startAnimating;
+- (void)stopAnimating;
++ (CGFloat)defaultHeight;
+
+@end
+
+NS_ASSUME_NONNULL_END
