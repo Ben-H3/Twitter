@@ -112,4 +112,8 @@
     }
 }
 
+- (IBAction)didTapReply:(id)sender {
+    self.tweet.replyClicked = YES;
+}
+
 @end

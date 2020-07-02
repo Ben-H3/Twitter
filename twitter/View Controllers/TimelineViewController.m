@@ -14,7 +14,7 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 
-@interface TimelineViewController () <ComposeViewControllerDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface TimelineViewController () <ComposeViewControllerDelegate, TweetDetailViewControllerDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @end
 
@@ -62,10 +62,6 @@
     
 }
 
--(void)didTweet:(Tweet *)tweet{
-    [self.tweets insertObject:tweet atIndex:0];
-    [self.tableView reloadData];
-}
 
 - (IBAction)logout:(id)sender {
     AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
@@ -94,20 +90,43 @@
     return cell;
 }
 
+-(void)didTweet:(Tweet *)tweet{
+    [self.tweets insertObject:tweet atIndex:0];
+    [self.tableView reloadData];
+}
+
+- (void) updateCell:(TweetCell *)cell{
+    [cell loadTweet];
+    [self.tableView reloadData];
+}
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.destinationViewController isKindOfClass:[DetailsViewController class]]) {
-        UITableViewCell *tappedCell = sender;
+        TweetCell *tappedCell = sender;
         NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
         DetailsViewController *detailsViewController = [segue destinationViewController];
         detailsViewController.tweet = self.tweets[indexPath.row];
+        detailsViewController.cell = tappedCell;
+        detailsViewController.delegate = self;
     }
     else {
         UINavigationController *navController = [segue destinationViewController];
         ComposeViewController *composeViewController = (ComposeViewController*)navController.topViewController;
         composeViewController.delegate = self;
+        if ([segue.identifier isEqualToString:@"reply"]) {
+            composeViewController.reply = YES;
+            for (Tweet* tweet in self.tweets) {
+                if (tweet.replyClicked == YES) {
+                    composeViewController.tweet = tweet;
+                }
+            }
+        }
+        else {
+            composeViewController.reply = NO;
+        }
     }
 }
 

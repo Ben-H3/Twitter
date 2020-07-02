@@ -10,8 +10,8 @@
 #import "Tweet.h"
 
 static NSString * const baseURLString = @"https://api.twitter.com";
-static NSString * const consumerKey = @"2WUkAcoypEkfA0GPWr0CYOdCs"; // Enter your consumer key here
-static NSString * const consumerSecret = @"kEvN2rhkZ2mJih8jpNodhIIW2DAVzjagQXXPLnPNgONb5IW5Qz"; // Enter your consumer secret here
+static NSString * const consumerKey = @"5lUJuO5AUpPUCez4ewYDFrtgh"; //@"2WUkAcoypEkfA0GPWr0CYOdCs"; // Enter your consumer key here
+static NSString * const consumerSecret = @"s5ynGqXzstUZwFPxVyMDkYh197qvHOcVM3kwv1o2TKhS1avCdS";//@"kEvN2rhkZ2mJih8jpNodhIIW2DAVzjagQXXPLnPNgONb5IW5Qz"; // Enter your consumer secret here
 
 @interface APIManager()
 
@@ -84,11 +84,33 @@ static NSString * const consumerSecret = @"kEvN2rhkZ2mJih8jpNodhIIW2DAVzjagQXXPL
 - (void)postStatusWithText:(NSString *)text completion:(void (^)(Tweet *, NSError *))completion{
     NSString *urlString = @"1.1/statuses/update.json";
     NSDictionary *parameters = @{@"status": text};
-    
     [self POST:urlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable tweetDictionary) {
         Tweet *tweet = [[Tweet alloc]initWithDictionary:tweetDictionary];
         completion(tweet, nil);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        completion(nil, error);
+    }];
+}
+
+- (void)replyStatusWithText:(NSString*)id_str text:(NSString *)text  completion:(void (^)(Tweet *, NSError *))completion{
+    NSString *urlString = @"1.1/statuses/update.json";
+    NSDictionary *parameters = @{@"status": text, @"in_reply_to_status_id": id_str};
+    [self POST:urlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable tweetDictionary) {
+        Tweet *tweet = [[Tweet alloc]initWithDictionary:tweetDictionary];
+        completion(tweet, nil);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        completion(nil, error);
+    }];
+}
+
+- (void)getCurrUser:(void(^)(User *user, NSError *error))completion {
+    
+    [self GET:@"1.1/account/verify_credentials.json" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable userDict) {
+        // Success
+        User *user = [[User alloc] initWithDictionary:userDict];
+        completion(user, nil);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        // There was a problem
         completion(nil, error);
     }];
 }

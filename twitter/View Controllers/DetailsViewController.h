@@ -8,12 +8,23 @@
 
 #import <UIKit/UIKit.h>
 #import "Tweet.h"
+#import "TweetCell.h"
 
 NS_ASSUME_NONNULL_BEGIN
+
+@protocol TweetDetailViewControllerDelegate
+
+- (void) didTweet:(Tweet *)tweet;
+- (void) updateCell:(TweetCell *)cell;
+
+@end
 
 @interface DetailsViewController : UIViewController
 
 @property (strong, nonatomic) Tweet *tweet;
+@property (strong, nonatomic) TweetCell *cell;
+
+@property (weak, nonatomic) id<TweetDetailViewControllerDelegate> delegate;
 
 @end
 

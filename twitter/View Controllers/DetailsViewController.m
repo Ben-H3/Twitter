@@ -7,11 +7,12 @@
 //
 
 #import "DetailsViewController.h"
+#import "ComposeViewController.h"
 #import "User.h"
 #import "UIImageView+AFNetworking.h"
 #import "APIManager.h"
 
-@interface DetailsViewController ()
+@interface DetailsViewController () <ComposeViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 @property (weak, nonatomic) IBOutlet UILabel *name;
@@ -73,6 +74,7 @@
             else{
                 [self.tweet updateFavorite];
                 [self loadCounts];
+                [self.delegate updateCell:self.cell];
             }
         }];
     }
@@ -84,6 +86,7 @@
             else {
                 [self.tweet updateFavorite];
                 [self loadCounts];
+                [self.delegate updateCell:self.cell];
             }
         }];
     }
@@ -98,6 +101,7 @@
             else {
                 [self.tweet updateRetweet];
                 [self loadCounts];
+                [self.delegate updateCell:self.cell];
             }
         }];
     }
@@ -109,18 +113,26 @@
             else {
                 [self.tweet updateRetweet];
                 [self loadCounts];
+                [self.delegate updateCell:self.cell];
             }
         }];
     }
 }
 
+- (void) didTweet:(Tweet *)tweet {
+    [self.delegate didTweet:tweet];
+}
 
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    UINavigationController *navController = [segue destinationViewController];
+    ComposeViewController *composeViewController = (ComposeViewController*)navController.topViewController;
+    self.tweet.replyClicked = YES;
+    composeViewController.reply = YES;
+    composeViewController.tweet = self.tweet;
+    composeViewController.delegate = self;
 }
 
 @end

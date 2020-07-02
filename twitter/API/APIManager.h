@@ -19,6 +19,9 @@
 - (void)composeTweetWith:(NSString *)text completion:(void (^)(Tweet *, NSError *))completion;
 
 - (void)postStatusWithText:(NSString *)text completion:(void (^)(Tweet *, NSError *))completion;
+- (void)replyStatusWithText:(NSString*)id_str text:(NSString *)text  completion:(void (^)(Tweet *, NSError *))completion;
+
+- (void)getCurrUser:(void(^)(User *user, NSError *error))completion;
 
 - (void)favorite:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion;
 - (void)unfavorite:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion;
