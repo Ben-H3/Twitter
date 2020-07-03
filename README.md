@@ -54,7 +54,11 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://media.giphy.com/media/KDVOZk4o9LegGVwl8T/giphy.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+Here's a walkthrough of my auto-layout implementation:
+
+<img src='https://media.giphy.com/media/XGln7VPe5Sd5F6AD14/giphy.gif' title='Auto-Layout Walkthrough' width='' alt='Auto-Layout Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
