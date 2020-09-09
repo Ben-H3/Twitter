@@ -1,12 +1,12 @@
-# Project 3 - Twitter
+# Twitter Client
 
 I created a basic twitter app to read and compose tweets using the [Twitter API](https://apps.twitter.com/).
 
-Time spent: **30** hours spent in total
+Time spent: **50** hours spent in total
 
 ## User Stories
 
-The following **required** functionality is completed:
+The following features are implemented:
 
 - [x] User sees app icon in home screen and styled launch screen
 - [x] User can sign in using OAuth login flow
@@ -19,9 +19,6 @@ The following **required** functionality is completed:
 - [x] Using AutoLayout, the Tweet cell should adjust its layout for iPhone 11, Pro and SE device sizes as well as accommodate device rotation.
 - [x] User should display the relative timestamp for each tweet "8m", "7h"
 - [x] Tweet Details Page: User can tap on a tweet to view it, with controls to retweet, favorite, and reply.
-
-The following **stretch** features are implemented:
-
 - [x] User can view their profile in a *profile tab*
   - Contains the user header view: picture and tagline
   - Contains a section with the users basic stats: # tweets, # following, # followers
@@ -35,17 +32,8 @@ The following **stretch** features are implemented:
 - [x] After creating a new tweet, a user should be able to view it in the timeline immediately without refetching the timeline from the network.
 - [x] User can reply to any tweet, and replies should be prefixed with the username and the reply_id should be set when posting the tweet
 - [x] Profile Page: pulling down the profile page should blur and resize the header image.
-
-
-The following **additional** features are implemented:
-
 - [x] User timeline automatically updates after replies, retweets, and favorites.
 - [x] When replying to a tweet, the app displays the recipient's profile photo and username.
-
-Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
-
-1. How did people implement auto-layout? Did anyone discover any intuitive auto-layout techniques?
-2. How did people determine whether to make a new Model for various new pages/features or instead just include all logic in a ViewController?
 
 ## Video Walkthrough
 
